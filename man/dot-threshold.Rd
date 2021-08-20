@@ -2,7 +2,7 @@
 % Please edit documentation in R/utilities.R
 \name{.threshold}
 \alias{.threshold}
-\title{Return model metrics for both Random Forest and RuleFit}
+\title{Return model metrics for RuleFit}
 \usage{
 .threshold(actual, predicted)
 }
@@ -10,5 +10,5 @@
 \item{actual}{values and predicted values of the model}
 }
 \description{
-Return model metrics for both Random Forest and RuleFit
+Return model metrics for RuleFit
 }

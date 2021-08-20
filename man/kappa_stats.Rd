@@ -10,5 +10,5 @@ kappa_stats(cross_table)
 \item{cross_table}{the confusion Matrix of predictions and actual data}
 }
 \description{
-Calculate kappa statistic
+Function to calculate kappa statistic; only meant to be used internal to the rule_fit() function.
 }

@@ -7,7 +7,7 @@
 ruleVarImp(x)
 }
 \arguments{
-\item{x}{an object of class varppRuleFit}
+\item{x}{an object of class varppRule}
 }
 \description{
 Function to return all rules ranked by variable importance

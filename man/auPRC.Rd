@@ -2,13 +2,13 @@
 % Please edit documentation in R/utilities.R
 \name{auPRC}
 \alias{auPRC}
-\title{Area under the precision recall curve plot for Class \code{varppRuleFit}}
+\title{Area under the precision recall curve plot for Class \code{varppRule}}
 \usage{
-auPRC(x, model = c("rf", "rulefit"))
+auPRC(x)
 }
 \arguments{
-\item{x}{an object of class \code{varppRuleFit}}
+\item{x}{an object of class \code{varppRule}}
 }
 \description{
-Area under the precision recall curve plot for Class \code{varppRuleFit}
+Area under the precision recall curve plot for Class \code{varppRule}
 }

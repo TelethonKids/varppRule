@@ -16,8 +16,8 @@ lasso_ensemble(data, rules, bootstrap.rounds, cores)
 \item{cores}{number of cores for parallel, defaults to 4}
 }
 \value{
-A list of predictions for the CADD raw rankscore and the tissue/cell specific expression added. Further, a variable importance list for all rules and variables tested.
+A list of predictions for the CADD raw rank score and the tissue/cell specific expression added. Further, a variable importance list for all rules and variables tested.
 }
 \description{
-This function performs nested cross validation on the generated rule data set. It is the final step in the rulefit algorithm and returns the predictions
+This function performs nested cross validation on the generated rule data set. It is the final step in the rule_fit algorithm and returns the predictions. This function is an internal function and is not meant to be executed on its own.
 }

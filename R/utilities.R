@@ -1,11 +1,11 @@
 #' Class specific functions
 #'
-#' @param x, an object of class varppRuleFit
+#' @param x, an object of class varppRule
 #' @export
 print.varppRule <- function(x){
 
   if(!class(x) =="varppRule"){
-    stop("Argument 'x' should be of class 'varppRuleFit'")
+    stop("Argument 'x' should be of class 'varppRule'")
   }
 
   cat("=========================================\n")
@@ -108,8 +108,11 @@ print.varpp <- function(x){
 
 #' Predict function for varppRule
 #'
+#' This function requires extra data and can not be executed by itself. We need to download the genome_files,
+#' prepare a patient data file from the .vcf file and can then apply this function.
+#'
 #' @param patient_data based on a patient .vcf file,
-#'                     a preprocessed inpout file that is annotated with GTEx and CADD scores
+#'                     a preprocessed input file that is annotated with GTEx and CADD scores
 #' @param hpo_term patient hpo terms
 #' @export
 predict.varppRule <- function(patient_data, model_results, predict=c("probability", "class")){
@@ -180,6 +183,8 @@ predict.varppRule <- function(patient_data, model_results, predict=c("probabilit
 
 #' Sampling and sub-setting for the benign variant data
 #'
+#' This is an internal function, not to be executed outside of the varpp() and rule_fit() functions
+#'
 #' @param benign_data the subset of benign variants
 #' @param sampled_genes the sampled genes (with replacement) from the sampling step
 #'
@@ -208,46 +213,35 @@ predict.varppRule <- function(patient_data, model_results, predict=c("probabilit
 
 #====================================================================================================================
 
-#' Area under the precision recall curve plot for Class \code{varppRuleFit}
-#' @param x an object of class \code{varppRuleFit}
+#' Area under the precision recall curve plot for Class \code{varppRule}
+#' @param x an object of class \code{varppRule}
 #' @import ggplot2
 #' @import precrec
 #' @export
-auPRC <- function(x, model = c("rf", "rulefit")){
+auPRC <- function(x){
 
-  if(model == "rf"){
-    randomforest <- evalmod(scores = x$RandomForest$accuracy[,3], labels = x$RandomForest$accuracy[,2])
-    autoplot(randomforest, "PRC")
-  }else{
-    rulefit <- evalmod(scores = x$RuleFit$accuracy[,3], labels = x$RuleFit$accuracy[,2])
+    rulefit <- evalmod(scores = x$RuleFit$accuracy[,3],
+                       labels = x$RuleFit$accuracy[,2])
     autoplot(rulefit,"PRC")
-
-  }
 
 }
 
-#' Area under the receiver operator curve plot for Class \code{varppRuleFit}
-#' @param x an object of class \code{varppRuleFit}
+#' Area under the receiver operator curve plot for Class \code{varppRule}
+#' @param x an object of class \code{varppRule}
 #' @import ggplot2
 #' @import precrec
 #' @export
-auROC <- function(x, model = c("rf", "rulefit")){
+auROC <- function(x){
 
-  if(model == "rf"){
-    randomforest <- evalmod(scores = x$RandomForest$accuracy[,3], labels = x$RandomForest$accuracy[,2])
-    autoplot(randomforest, "ROC")
-  }else{
     rulefit <- evalmod(scores = x$RuleFit$accuracy[,3], labels = x$RuleFit$accuracy[,2])
     autoplot(rulefit, "ROC")
-
-  }
 
 }
 
 #====================================================================================================================
 
 #' Function to return all rules ranked by variable importance
-#' @param x an object of class varppRuleFit
+#' @param x an object of class varppRule
 #' @export
 ruleVarImp <- function(x){
 
@@ -257,7 +251,7 @@ ruleVarImp <- function(x){
 
 #====================================================================================================================
 
-#' Return model metrics for both Random Forest and RuleFit
+#' Return model metrics for RuleFit
 #' @param actual values and predicted values of the model
 #' @import pROC
 #' @export
@@ -275,7 +269,7 @@ ruleVarImp <- function(x){
 
 #====================================================================================================================
 
-#' Return model metrics for both Random Forest and RuleFit
+#' Return model metrics for RuleFit
 #' @param actual values and predicted values of the model
 #' @import pROC
 #' @export
@@ -303,43 +297,24 @@ ruleVarImp <- function(x){
 
 #====================================================================================================================
 
-#' Return model metrics for both Random Forest and RuleFit
-#' @param x an object of class \code{varppRuleFit}
+#' Return model metrics for RuleFit
+#' @param x an object of class \code{varppRule}
 #' @import pROC
 #' @importFrom caret confusionMatrix
 #' @export
 metrics <- function(x) {
-  #========================================================================================
-  # Model quality measures
-  # 1. Random Forest predictions
-  #========================================================================================
-
-  if(!is.null(x$RandomForest$accuracy[,3])){
-
-    RandomForestPrediction <- .class_by_threshold(x$RandomForest$accuracy[,2], x$RandomForest$accuracy[,3])
-
-    #========================================================================================
-    # 2. LASSO
-    #========================================================================================
-
-    RuleFitPrediction <-  .class_by_threshold(x$RuleFit$accuracy[,2], x$RuleFit$accuracy[,3])
-
-    list(RandomForest = RandomForestPrediction, RuleFit = RuleFitPrediction)
-  }else{
 
     RuleFitPrediction <-  .class_by_threshold(x$RuleFit$accuracy[,2], x$RuleFit$accuracy[,3])
 
     list(RuleFit=RuleFitPrediction)
 
-
-  }
 }
 
 
 #====================================================================================================================
 
 #' Return a table with model names, auPRC, PP100 and ntree of the model: only for two level bootstrap model
-#' @param x an object of class \code{varppRuleFit}
+#' @param x an object of class \code{varppRule}
 #' @import precrec
 #' @export
 performance <- function(x, ntree=x$ntree){
@@ -371,7 +346,7 @@ performance <- function(x, ntree=x$ntree){
 #====================================================================================================================
 
 #' Return a table with model names, auPRC, PP100 and ntree of the model: only for two level bootstrap model
-#' @param x an object of class \code{varppRuleFit}
+#' @param x an object of class \code{varpp}
 #' @import precrec
 #' @export
 performance_varpp <- function(x){
@@ -402,6 +377,9 @@ performance_varpp <- function(x){
 #====================================================================================================================
 
 #' Calculate kappa statistic
+#'
+#' Function to calculate kappa statistic; only meant to be used internal to the rule_fit() function.
+#'
 #' @param cross_table the confusion Matrix of predictions and actual data
 #' @import precrec
 #' @export
@@ -424,8 +402,8 @@ kappa_stats <- function(cross_table){
 
 #' Prediction of single rules
 #'
-#' @param rulename is the name of one of the rules as returned by the varppRuleFit model
-#' @param rulefit_results_object, a varppRuleFit object
+#' @param rulename is the name of one of the rules as returned by the varppRule model
+#' @param rulefit_results_object, a varppRule object
 #'
 #' @export
 selected_rule_performance <- function(rulename,
@@ -455,7 +433,7 @@ selected_rule_performance <- function(rulename,
 
 #' Extract rules from ranger trees
 #'
-#' This function returns rules based on the decision trees built in ranger. It depends on the function varpp
+#' This function returns rules based on the decision trees built in ranger. It depends on the function varpp and is only meant to be executed internally in rule_fit()
 #'
 #' @param rf_results the results fro mthe ranger tree generation within the varpp function
 #'
@@ -481,58 +459,9 @@ selected_rule_performance <- function(rulename,
 #====================================================================================================================
 
 
-#' Simulate data to test the rulefit function
-#'
-#' @param n the number of instances
-#' @param p the number of variables
-#' @param seed the seed, to create reproducible results
-#'
-#' @return a simulated data set with a binary outcome variable and 35 predictors that are associated with the outcome
-#
-#' @export
-simulate_data <- function(n=1000,
-                          p = 100,
-                          seed = 777){
-
-  n = n
-  p = p
-  #no influence : 65
-
-  #xij ∼ U(0, 1)
-  set.seed(seed)
-  x <- NULL
-  for( i in 1:p){
-
-    x <- cbind(x,runif(n, min = 0, max = 1))
-
-  }
-
-  x <- data.frame(x)
-  names(x) <- paste0("x", 1:dim(x)[2])
-
-  # Create noise variable
-  e <- rnorm(n, mean = 0, sd =2)
-
-  y <-  10*(exp(x[,1]^2) * exp(x[,2]^2) * exp(x[,3]^2) * exp(x[,4]^2) * exp(x[,5]^2)) + rowSums(x[,6:35] + e)
-
-  y_bin <- ifelse(y > median(y), 1, 0)
-
-
-  x$y <- y_bin
-  x$index <- c(1:dim(x)[1])
-  x <- x[,c("index", "y", names(x)[grep("x", names(x))])]
-  x$index.1 <- NULL
-
-  x
-}
-
-
-#====================================================================================================================
-
-
 #' Density plot for the rule predictions
 #'
-#' @param rulefit_results an object of class varppRuleFit
+#' @param rulefit_results an object of class varppRule
 #'
 #' @return a density plot for the predictions based on the final rules
 #
@@ -559,7 +488,7 @@ density_plot <- function(rulefit_results){
 
 #' Scatterplot of # of rules that predict correctly versus # of variants per gene
 #'
-#' @param rulefit_results an object of class varppRuleFit
+#' @param rulefit_results an object of class varppRule
 #' @param y the outcome variable
 #'
 #' @return a scatterplot of # of rules and # of variants per gene
@@ -604,9 +533,9 @@ ruleVariantPlot <- function(rulefit_results) {
 
 #' varIMP: Function to extract the variable importance of the expression data variables
 #'
-#' This function is provided on top of ruleVarImp. It Re-weights the rule kappas by the variabels selected per rule
-#' and returns a 0 to 1 scaled importance value per tissue. The most important variabel will have a value of 1.
-#' This is based on the variabel importance described in the RuleFit publication by XXX
+#' This function is provided on top of ruleVarImp. It Re-weights the rule kappas by the variables selected per rule
+#' and returns a 0 to 1 scaled importance value per tissue. The most important variable will have a value of 1.
+#' This is based on the variable importance described in the RuleFit publication by Friedman and Popescue
 #'
 #' @param rule_model This is the RuleFit model object
 #' @param HPOterm  Add the HPO term name for the model
@@ -661,6 +590,8 @@ varIMP <- function(rule_model=NULL,
 
 #' Function to remove the CADD score variable including '>' , '<' and '=' from the rules
 #'
+#' This is an internal function, not to be used by itself.
+#'
 #' @param varppRuleObject the results from varppRule
 #'
 #' @importFrom stringr str_squish str_remove
@@ -683,6 +614,8 @@ removeCADD <- function(varppRuleObject){
 
 #' Function to extract CADD score including cut-off
 #'
+#' This is an internal function, not to be used by itself.
+#'
 #' @param varppRuleObject the results from varppRule
 #'
 #' @importFrom stringr str_squish str_extract
@@ -704,7 +637,7 @@ getCADDcutOff <- function(varppRuleObject) {
 
 #' Return a gene panel based on the tissues in the top rule
 #'
-#' @param varppRuleFitObject the results from varppRule
+#' @param varppRuleObject the results from varppRule
 #'
 #' @importFrom stringr str_squish str_remove
 #' @importFrom magrittr '%>%'

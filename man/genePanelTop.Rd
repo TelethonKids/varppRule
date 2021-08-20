@@ -7,7 +7,7 @@
 genePanelTop(varppRuleObject)
 }
 \arguments{
-\item{varppRuleFitObject}{the results from varppRule}
+\item{varppRuleObject}{the results from varppRule}
 }
 \description{
 Return a gene panel based on the tissues in the top rule

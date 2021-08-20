@@ -1,12 +1,12 @@
 #' LASSO cross validation of rules
 #'
-#' This function performs nested cross validation on the generated rule data set. It is the final step in the rulefit algorithm and returns the predictions
+#' This function performs nested cross validation on the generated rule data set. It is the final step in the rule_fit algorithm and returns the predictions. This function is an internal function and is not meant to be executed on its own.
 #'
 #' @param data is a list of data with the rules added. The benign and the pathogenic variants files are necessary for the sampling.
 #' @param rules is the list of rules that were generated in the varpp function. This is necessary for the annotation of the final results.
 #' @param bootstrap.rounds number of bootstrap rounds for the outer loop of the LASSO cross-validation, defaults to 100.
 #' @param cores number of cores for parallel, defaults to 4
-#' @return A list of predictions for the CADD raw rankscore and the tissue/cell specific expression added. Further, a variable importance list for all rules and variables tested.
+#' @return A list of predictions for the CADD raw rank score and the tissue/cell specific expression added. Further, a variable importance list for all rules and variables tested.
 #'
 #' @import caret
 #' @import glmnet
@@ -19,9 +19,9 @@
 #' @import grid
 #' @export
 lasso_ensemble <- function(data,
-                             rules,
-                             bootstrap.rounds,
-                             cores){
+                           rules,
+                           bootstrap.rounds,
+                           cores){
 
 
   # Specify benign and pathogenic gene names for sampling

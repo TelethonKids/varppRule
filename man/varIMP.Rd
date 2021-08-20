@@ -12,7 +12,7 @@ varIMP(rule_model = NULL, HPOterm)
 \item{HPOterm}{Add the HPO term name for the model}
 }
 \description{
-This function is provided on top of ruleVarImp. It Re-weights the rule kappas by the variabels selected per rule
-and returns a 0 to 1 scaled importance value per tissue. The most important variabel will have a value of 1.
-This is based on the variabel importance described in the RuleFit publication by XXX
+This function is provided on top of ruleVarImp. It Re-weights the rule kappas by the variables selected per rule
+and returns a 0 to 1 scaled importance value per tissue. The most important variable will have a value of 1.
+This is based on the variable importance described in the RuleFit publication by Friedman and Popescue
 }

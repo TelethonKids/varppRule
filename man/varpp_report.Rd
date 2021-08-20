@@ -2,7 +2,7 @@
 % Please edit documentation in R/varpp_report.R
 \name{varpp_report}
 \alias{varpp_report}
-\title{Report function for varpp results}
+\title{Report function for rule_fit() results}
 \usage{
 varpp_report(results, report_filename)
 }

@@ -10,5 +10,5 @@ removeCADD(varppRuleObject)
 \item{varppRuleObject}{the results from varppRule}
 }
 \description{
-Function to remove the CADD score variable including '>' , '<' and '=' from the rules
+This is an internal function, not to be used by itself.
 }

@@ -4,12 +4,24 @@
 \alias{varpp}
 \title{Based on the original VARPP paper, this algorithm is the parallelised and updated version of the model}
 \usage{
-varpp(HPO_genes, type = "gtex", ntree = 500, max.depth = NULL, cores = 4)
+varpp(
+  HPO_genes,
+  type = c("gtex", "hcl", "custom"),
+  user_patho = NULL,
+  user_benign = NULL,
+  ntree = 500,
+  max.depth = NULL,
+  cores = 4
+)
 }
 \arguments{
 \item{HPO_genes}{HPO term associated list of genes}
 
-\item{type}{the prediction data; either hcl (single cell) or gtex (tissue specific)}
+\item{type}{the prediction data; either hcl (single cell), gtex (tissue specific) or custom (requires the user to provide custom_patho and custom_benign).}
+
+\item{user_patho}{a user provided file for the pathogenic variants. This needs to have the following first few columns:Gene, GeneVariant, CADD_raw_rankscore, CADD_PHRED_SCORE, Pathogenic, gene_id,gene_biotype}
+
+\item{user_benign}{a user provided file for the benign variants. This needs to have the following first few columns:Gene, GeneVariant, CADD_raw_rankscore, CADD_PHRED_SCORE, Pathogenic, gene_id,gene_biotype}
 
 \item{ntree}{is the number of trees that should be built for ranger. It defaults to 1000}
 

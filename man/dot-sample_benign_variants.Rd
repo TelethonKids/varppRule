@@ -15,5 +15,5 @@
 a list of randomly sampled gene variants, without replacement
 }
 \description{
-Sampling and sub-setting for the benign variant data
+This is an internal function, not to be executed outside of the varpp() and rule_fit() functions
 }

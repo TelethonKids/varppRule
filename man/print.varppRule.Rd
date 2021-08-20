@@ -7,7 +7,7 @@
 \method{print}{varppRule}(x)
 }
 \arguments{
-\item{x, }{an object of class varppRuleFit}
+\item{x, }{an object of class varppRule}
 }
 \description{
 Class specific functions

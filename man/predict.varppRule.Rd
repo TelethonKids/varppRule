@@ -8,10 +8,11 @@
 }
 \arguments{
 \item{patient_data}{based on a patient .vcf file,
-a preprocessed inpout file that is annotated with GTEx and CADD scores}
+a preprocessed input file that is annotated with GTEx and CADD scores}
 
 \item{hpo_term}{patient hpo terms}
 }
 \description{
-Predict function for varppRule
+This function requires extra data and can not be executed by itself. We need to download the genome_files,
+prepare a patient data file from the .vcf file and can then apply this function.
 }

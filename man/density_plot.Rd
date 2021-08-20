@@ -7,7 +7,7 @@
 density_plot(rulefit_results)
 }
 \arguments{
-\item{rulefit_results}{an object of class varppRuleFit}
+\item{rulefit_results}{an object of class varppRule}
 }
 \value{
 a density plot for the predictions based on the final rules

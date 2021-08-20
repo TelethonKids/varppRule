@@ -7,7 +7,7 @@
 performance(x, ntree = x$ntree)
 }
 \arguments{
-\item{x}{an object of class \code{varppRuleFit}}
+\item{x}{an object of class \code{varppRule}}
 }
 \description{
 Return a table with model names, auPRC, PP100 and ntree of the model: only for two level bootstrap model

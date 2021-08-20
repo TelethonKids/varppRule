@@ -2,13 +2,13 @@
 % Please edit documentation in R/utilities.R
 \name{auROC}
 \alias{auROC}
-\title{Area under the receiver operator curve plot for Class \code{varppRuleFit}}
+\title{Area under the receiver operator curve plot for Class \code{varppRule}}
 \usage{
-auROC(x, model = c("rf", "rulefit"))
+auROC(x)
 }
 \arguments{
-\item{x}{an object of class \code{varppRuleFit}}
+\item{x}{an object of class \code{varppRule}}
 }
 \description{
-Area under the receiver operator curve plot for Class \code{varppRuleFit}
+Area under the receiver operator curve plot for Class \code{varppRule}
 }

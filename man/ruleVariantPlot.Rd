@@ -7,7 +7,7 @@
 ruleVariantPlot(rulefit_results)
 }
 \arguments{
-\item{rulefit_results}{an object of class varppRuleFit}
+\item{rulefit_results}{an object of class varppRule}
 
 \item{y}{the outcome variable}
 }

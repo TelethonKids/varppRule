@@ -10,5 +10,5 @@ getCADDcutOff(varppRuleObject)
 \item{varppRuleObject}{the results from varppRule}
 }
 \description{
-Function to extract CADD score including cut-off
+This is an internal function, not to be used by itself.
 }

@@ -2,13 +2,13 @@
 % Please edit documentation in R/utilities.R
 \name{metrics}
 \alias{metrics}
-\title{Return model metrics for both Random Forest and RuleFit}
+\title{Return model metrics for RuleFit}
 \usage{
 metrics(x)
 }
 \arguments{
-\item{x}{an object of class \code{varppRuleFit}}
+\item{x}{an object of class \code{varppRule}}
 }
 \description{
-Return model metrics for both Random Forest and RuleFit
+Return model metrics for RuleFit
 }

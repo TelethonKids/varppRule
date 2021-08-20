@@ -13,8 +13,7 @@ Description: This package is an extension of the VARPP (https://github.com/denia
     This package, similar to the original VARPP code, focuses on the task of prioritising variants in respect to the observed disease phenotype(s), after applying the pre-filtering step.  
     This package links gene expression across multiple tissues and cell types to the phenotypes, hence the name (VAR)iant (P)rioritisation by (P)henotype. It can prioritise potential disease causing
     variants in a personalised manner.
-    On top of the original task of prioritising variants, this version 2 of VARPP also returns a set of Rules that led to the prioritisation of the variants. This is based on the work by Fiedman
-    and Popescu (Friedman JH, Popescu BE. Predictive learning via rule ensembles. The Annals of Applied Statistics. 2008;2(3):916-54.).
+    On top of the original task of prioritising variants, this version 2 of VARPP also returns a set of Rules that led to the prioritisation of the variants. This is based on the work by Fiedman and Popescu (Friedman JH, Popescu BE. Predictive learning via rule ensembles. The Annals of Applied Statistics. 2008;2(3):916-54.).
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true

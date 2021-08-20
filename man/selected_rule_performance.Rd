@@ -7,9 +7,9 @@
 selected_rule_performance(rulename, rulefit_results_object)
 }
 \arguments{
-\item{rulename}{is the name of one of the rules as returned by the varppRuleFit model}
+\item{rulename}{is the name of one of the rules as returned by the varppRule model}
 
-\item{rulefit_results_object, }{a varppRuleFit object}
+\item{rulefit_results_object, }{a varppRule object}
 }
 \description{
 Prediction of single rules

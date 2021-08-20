@@ -1,4 +1,4 @@
-#' Report function for varpp results
+#' Report function for rule_fit() results
 #'
 #' This function will create a report based on the results from the rulef_fit() function.'
 #'

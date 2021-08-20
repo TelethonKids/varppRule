@@ -13,5 +13,5 @@
 a named vector of rules
 }
 \description{
-This function returns rules based on the decision trees built in ranger. It depends on the function varpp
+This function returns rules based on the decision trees built in ranger. It depends on the function varpp and is only meant to be executed internally in rule_fit()
 }

@@ -1,0 +1,225 @@
+---
+github: "Hobbeist"
+output: 
+  html_document:
+    toc: no
+    self_contained: yes
+    toc_float: no
+    template: resources/template_varpp.html
+    css: resources/html_report.css
+logo: varpp-logo.png
+params:
+  variants: NA
+  rf_vars: NA
+  rulefit_vars: NA
+  all_res: NA
+  rules: NA
+  ntree: NA
+  maxdepth: NA
+  RuleFit_results: NA
+  RuleFit_roc: NA
+  RuleFit_prc: NA
+  auprcpp100: NA
+  bootstrap_rounds: NA
+  HPO_term_name: NA
+  kappa_plot: NA
+  data_dimensions: NA
+  rules_before_filtering: NA
+  rules_after_filtering: NA
+  patho_ratio: NA
+  missclass_patho: NA
+  density_plot: NA
+  DATA_all: NA
+title: "RuleFit Analysis Report for: [`r params$HPO_term_name`](`r paste0('https://hpo.jax.org/app/browse/term/',params$HPO_term_name)`)"
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(plotly)
+library(lubridate)
+library(varppRule)
+library(knitr)
+library(DT)
+library(rclipboard)
+library(shiny)
+```
+
+# {.tabset .tabset-fade}
+
+
+<p align="center">
+<img src="varpp-logo.png"  width="20%" height="20%">
+</p>
+
+<br></br>
+
+***
+
+<br></br>
+
+## Gene Panel {.tabset .tabset-fade}
+
+### Table 
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+SUMS <- params$DATA_all %>% 
+      select(starts_with("rule")) %>% 
+      rowSums()
+
+number_of_rules <- as.integer(dim(params$DATA_all %>% 
+                                          select(starts_with("rule")))[2])/2
+      
+      
+geneVar <-  params$DATA_all %>% 
+        mutate(Pred_number = SUMS) %>%
+        mutate(Prediction = ifelse(Pred_number >= number_of_rules, TRUE, FALSE)) %>%
+        filter(Prediction == TRUE) %>%
+        select(GeneVariant) %>%
+        unique() %>%
+        unlist() %>%
+        as.character()
+
+genes <- unique(unlist(lapply(geneVar, function(x) stringr::str_split(x, "_")[[1]][1] )))
+
+
+DT::datatable(data.frame(Gene_Panel = genes),  style='bootstrap4', extensions = 'Buttons', options = list(
+        dom = 'Bfrtip', buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
+```
+
+
+### Links
+
+```{r message=FALSE, warning=FALSE, echo=FALSE}
+rclipboardSetup()
+SUMS <- params$DATA_all %>% 
+      select(starts_with("rule")) %>% 
+      rowSums()
+
+number_of_rules <- as.integer(dim(params$DATA_all %>% 
+                                          select(starts_with("rule")))[2])/2
+      
+      
+geneVar <-  params$DATA_all %>% 
+        mutate(Pred_number = SUMS) %>%
+        mutate(Prediction = ifelse(Pred_number >= number_of_rules, TRUE, FALSE)) %>%
+        filter(Prediction == TRUE) %>%
+        select(GeneVariant) %>%
+        unique() %>%
+        unlist() %>%
+        as.character()
+
+genes <- unique(unlist(lapply(geneVar, function(x) stringr::str_split(x, "_")[[1]][1] )))
+```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, results="asis"}
+
+
+      
+for (i in genes){
+  cat(paste0('<a href="https://www.genecards.org/cgi-bin/carddisp.pl?gene=',i,'&keywords=',i,'" target="blank_"><button class="cake"><b><h5>',i,'</h5></b></button></a>'))
+  
+}
+```
+
+## Predicted Variants 
+
+These are the predictions based on `varppRule`.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$all_res
+```
+
+
+## Prediction Rules {.tabset .tabset-fade}
+
+### Predictions
+The coefficient is the average coefficient over all `LASSO` models in the `LASSO` ensemble.
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$rules
+```
+
+### Density plot
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$density_plot
+```
+
+### Ratio Plot
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+try(ggplotly(
+params$patho_ratio))
+```
+
+### Misclassified positives
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$missclass_patho
+```
+
+
+## Prediction Measures {.tabset .tabset-pills .tabset-fade}
+
+Here are several different model quality measures as assessed against the "ground truth", meaning the known outcome.
+
+### RuleFit prediction
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$RuleFit_results
+```
+
+## Curves {.tabset .tabset-pills .tabset-fade}
+
+### RuleFit {.tabset .tabset-pills .tabset-fade}
+
+#### Receiver operatting characteristic (`ROC`)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$RuleFit_roc
+```
+
+#### Precision-Recall (`PRC`)
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+params$RuleFit_prc
+```
+
+
+## Run info
+<details>
+  <summary>Click to expand runinfo</summary>
+
+__`ntree`:__     
+`r params$ntree`    
+
+__`max.depth`:__     
+`r params$maxdepth`  
+
+__Number of models in`LASSO` ensemble:__    
+`r params$bootstrap_rounds`
+
+</details>
+
+## Data info
+
+__Data dimensions:__  
+`r params$data_dimensions`
+
+__Number of rules: pre-filtering:__  
+`r params$rules_before_filtering`  
+
+__Number of rules: post-filtering:__  
+`r params$rules_after_filtering`
+
+## R Session Info
+<details>
+  <summary>Click to expand session info</summary>
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(pander)
+pander(sessionInfo(), compact = FALSE)
+```
+</summary>

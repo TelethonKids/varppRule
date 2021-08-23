@@ -230,13 +230,13 @@ rule_fit <- function(HPO_genes,
   # or complementary rules in the model. We want the model to be as "lean" as possible to perform at its
   # best.
 
-  split_1     <- rule_dat[, -grep("rule", names(rule_dat))]
-  split_2     <- rule_dat[, grep("rule", names(rule_dat))]
-  split_2     <- split_2[, -caret::findCorrelation(cor(split_2))] # maybe just copy the code from caret?
-  rule_dat    <- cbind(split_1, split_2)
+  # split_1     <- rule_dat[, -grep("rule", names(rule_dat))]
+  # split_2     <- rule_dat[, grep("rule", names(rule_dat))]
+  # split_2     <- split_2[, -caret::findCorrelation(cor(split_2))] # maybe just copy the code from caret?
+  # rule_dat    <- cbind(split_1, split_2)
 
   # This is the old function to simply remove duplicated rules.
-  #rule_dat  <- rule_dat[!duplicated(as.list(rule_dat))]
+  rule_dat  <- rule_dat[!duplicated(as.list(rule_dat))]
 
   # Save the total number of Rules
   total_rules_without_duplicates <- dim(rule_dat)[2]
